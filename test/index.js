@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-const updater = require ( '../dist' );
+const {default: updater} = require ( '../dist' );
 
 /* MAIN */
 

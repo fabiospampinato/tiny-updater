@@ -3,7 +3,7 @@
 
 import Aborter from 'aborter';
 import {cyan, gray, green} from 'colorette';
-import fetch from 'node-fetch';
+import get from 'simple-get';
 import compare from 'semver-compare';
 import onExit from 'signal-exit';
 
@@ -13,17 +13,26 @@ const Utils = {
 
   /* API */
 
+  fetch: ( url: string ): any => {
+    return new Promise ( ( resolve, reject ) => {
+      const signal = Utils.getExitSignal ();
+      const request = get.concat ( url, ( error, response, data ) => {
+        if ( error ) return reject ( error );
+        return resolve ( JSON.parse ( data.toString () ) );
+      });
+      signal.addEventListener ( 'abort', request.abort.bind ( request ) );
+    });
+  },
+
   getExitSignal: () => {
     const aborter = new Aborter ();
     onExit ( () => aborter.abort () );
-    return aborter.signal as any; //TSC: Not techincally 100% compliant with AbortSignal, but good enough for node-fetch
+    return aborter.signal;
   },
 
   getLatestVersion: async ( name: string ): Promise<string | undefined> => {
     const latestUrl = `http://registry.npmjs.org/${name}/latest`;
-    const signal = Utils.getExitSignal ();
-    const response = await fetch ( latestUrl, {signal} );
-    const latest = await response.json ();
+    const latest = await Utils.fetch ( latestUrl );
     return latest.version;
   },
 
