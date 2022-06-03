@@ -1,20 +1,23 @@
 
 /* IMPORT */
 
-const {default: updater} = require ( '../dist' );
+import {describe} from 'fava';
+import updater from '../dist/index.js';
 
 /* MAIN */
 
-const test = async () => {
+describe ( 'TinyUpdater', it => {
 
-  const yes = await updater ({ name: 'aborter', version: '0.0.0' });
+  it ( 'works', async t => {
 
-  console.assert ( yes );
+    const yes = await updater ({ name: 'aborter', version: '0.0.0' });
 
-  const no = await updater ({ name: 'aborter', version: '100.0.0' });
+    t.true ( yes );
 
-  console.assert ( !no );
+    const no = await updater ({ name: 'aborter', version: '100.0.0' });
 
-};
+    t.false ( no );
 
-test ();
+  });
+
+});

@@ -1,11 +1,10 @@
 
 /* IMPORT */
 
-import Aborter from 'aborter';
-import {cyan, gray, green} from 'colorette';
-import get from 'simple-get';
-import compare from 'semver-compare';
-import onExit from 'signal-exit';
+import fetch from 'fetch-shim';
+import colors from 'tiny-colors';
+import whenExit from 'when-exit';
+import compare from './compare';
 
 /* MAIN */
 
@@ -13,20 +12,16 @@ const Utils = {
 
   /* API */
 
-  fetch: ( url: string ): any => {
-    return new Promise ( ( resolve, reject ) => {
-      const signal = Utils.getExitSignal ();
-      const request = get.concat ( url, ( error, response, data ) => {
-        if ( error ) return reject ( error );
-        return resolve ( JSON.parse ( data.toString () ) );
-      });
-      signal.addEventListener ( 'abort', request.abort.bind ( request ) );
-    });
+  fetch: async ( url: string ): Promise<{ version?: string }> => {
+    const signal = Utils.getExitSignal ();
+    const request = await fetch ( url, { signal } );
+    const json = await request.json ();
+    return json;
   },
 
   getExitSignal: () => {
-    const aborter = new Aborter ();
-    onExit ( () => aborter.abort () );
+    const aborter = new AbortController ();
+    whenExit ( () => aborter.abort () );
     return aborter.signal;
   },
 
@@ -41,8 +36,8 @@ const Utils = {
   },
 
   notify: ( name: string, version: string, latest: string ): void => {
-    const log = () => console.log ( `\n\n📦 Update available for ${cyan ( name )}: ${gray ( version )} → ${green ( latest )}` );
-    onExit ( log, { alwaysLast: true } );
+    const log = () => console.log ( `\n\n📦 Update available for ${colors.cyan ( name )}: ${colors.gray ( version )} → ${colors.green ( latest )}` );
+    whenExit ( log );
   }
 
 };
