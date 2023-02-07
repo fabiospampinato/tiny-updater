@@ -15,9 +15,7 @@ import Utils from './utils';
 //TODO: Account for non-latest releases
 //TODO: Don't output anything if the output is being piped somewhere
 
-const updater = async ({ name, version }: { name: string, version?: string }): Promise<boolean> => {
-
-  if ( !version ) return false;
+const updater = async ({ name, version }: { name: string, version: string }): Promise<boolean> => {
 
   const latest = await Utils.getLatestVersion ( name ).catch ( () => undefined );
 
