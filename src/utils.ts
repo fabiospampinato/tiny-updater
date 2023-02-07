@@ -1,7 +1,6 @@
 
 /* IMPORT */
 
-import fetch from 'fetch-shim';
 import colors from 'tiny-colors';
 import whenExit from 'when-exit';
 import compare from './compare';

@@ -25,7 +25,6 @@
     "updater"
   ],
   "dependencies": {
-    "fetch-shim": "^1.1.0",
     "tiny-colors": "^2.0.1",
     "when-exit": "^2.0.0"
   },
