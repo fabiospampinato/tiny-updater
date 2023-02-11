@@ -2,7 +2,7 @@
   "name": "tiny-updater",
   "repository": "github:fabiospampinato/tiny-updater",
   "description": "A small update notifier for NPM packages, useful for CLI apps.",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
