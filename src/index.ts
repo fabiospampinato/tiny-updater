@@ -9,7 +9,6 @@ import type {Options} from './types';
 //TODO: Check for updates less often
 //TODO: Annoy the user less
 //TODO: Account for non-latest releases
-//TODO: Don't output anything if the output is being piped somewhere
 
 const updater = async ( { name, version }: Options ): Promise<boolean> => {
 
