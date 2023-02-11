@@ -6,10 +6,6 @@ import type {Options} from './types';
 
 /* MAIN */
 
-//TODO: Check if using yarn
-//TODO: Check if installed globally
-//TODO: Check if installed as a dev dependency
-//TODO: Check if installed as peer dependency
 //TODO: Check for updates less often
 //TODO: Annoy the user less
 //TODO: Account for non-latest releases
