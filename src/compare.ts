@@ -19,9 +19,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// The following is just a slightly modified version of semver-compare
-
 /* MAIN */
+
+// The following is just a slightly modified version of semver-compare
 
 const compare = ( a: string, b: string ): -1 | 0 | 1 => {
 

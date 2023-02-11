@@ -2,10 +2,10 @@
 /* IMPORT */
 
 import Utils from './utils';
+import type {Options} from './types';
 
 /* MAIN */
 
-//TODO: Provide command suggestion for updating
 //TODO: Check if using yarn
 //TODO: Check if installed globally
 //TODO: Check if installed as a dev dependency
@@ -15,7 +15,7 @@ import Utils from './utils';
 //TODO: Account for non-latest releases
 //TODO: Don't output anything if the output is being piped somewhere
 
-const updater = async ({ name, version }: { name: string, version: string }): Promise<boolean> => {
+const updater = async ( { name, version }: Options ): Promise<boolean> => {
 
   const latest = await Utils.getLatestVersion ( name ).catch ( () => undefined );
 
