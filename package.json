@@ -13,7 +13,7 @@
     "compile:watch": "tsex compile --watch",
     "test": "tsex test",
     "test:watch": "tsex test --watch",
-    "prepublishOnly": "npm run clean && npm run compile && npm run test"
+    "prepublishOnly": "tsex prepare"
   },
   "keywords": [
     "tiny",
@@ -25,12 +25,12 @@
     "updater"
   ],
   "dependencies": {
-    "tiny-colors": "^2.0.1",
+    "tiny-colors": "^2.0.2",
     "when-exit": "^2.0.0"
   },
   "devDependencies": {
-    "fava": "^0.0.6",
-    "tsex": "^1.1.2",
-    "typescript": "^4.7.3"
+    "fava": "^0.1.0",
+    "tsex": "^2.1.0",
+    "typescript": "^4.9.5"
   }
 }
