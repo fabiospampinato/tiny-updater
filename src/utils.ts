@@ -1,7 +1,6 @@
 
 /* IMPORT */
 
-import process from 'node:process';
 import colors from 'tiny-colors';
 import whenExit from 'when-exit';
 import compare from './compare';
@@ -36,7 +35,7 @@ const Utils = {
   },
 
   notify: ( name: string, version: string, latest: string ): void => {
-    if ( !process.stdout.isTTY ) return; // Probably piping stdout
+    if ( !globalThis.process?.stdout?.isTTY ) return; // Probably piping stdout
     const log = () => console.log ( `\n\n📦 Update available for ${colors.cyan ( name )}: ${colors.gray ( version )} → ${colors.green ( latest )}` );
     whenExit ( log );
   }
