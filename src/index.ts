@@ -1,24 +1,38 @@
 
 /* IMPORT */
 
+import Store from './store';
 import Utils from './utils';
-import type {Options} from './types';
+import type {Options, StoreRecord} from './types';
 
 /* MAIN */
 
-//TODO: Check for updates less often
-//TODO: Annoy the user less
 //TODO: Account for non-latest releases
 
-const updater = async ( { name, version }: Options ): Promise<boolean> => {
+const updater = async ( { name, version, ttl = 0 }: Options ): Promise<boolean> => {
 
-  const latest = await Utils.getLatestVersion ( name ).catch ( () => undefined );
+  const record = Store.get ( name );
+  const timestamp = Date.now ();
+  const isFresh = !record || ( timestamp - record.timestampFetch ) >= ttl;
+  const latest = isFresh ? await Utils.getLatestVersion ( name ).catch ( () => undefined ) : record?.version;
 
   if ( !latest ) return false;
 
+  if ( isFresh ) {
+
+    const record: StoreRecord = { timestampFetch: timestamp, timestampNotification: timestamp, version: latest };
+
+    Store.set ( name, record );
+
+  }
+
   if ( !Utils.isUpdateAvailable ( version, latest ) ) return false;
 
-  Utils.notify ( name, version, latest );
+  if ( isFresh ) {
+
+    Utils.notify ( name, version, latest );
+
+  }
 
   return true;
 

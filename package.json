@@ -25,6 +25,7 @@
     "updater"
   ],
   "dependencies": {
+    "isostore": "^1.0.0",
     "tiny-colors": "^2.0.2",
     "when-exit": "^2.1.0"
   },

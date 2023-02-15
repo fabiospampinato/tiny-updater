@@ -30,6 +30,14 @@ const Utils = {
     return latest.version;
   },
 
+  isNumber: ( value: unknown ): value is number => {
+    return typeof value === 'number';
+  },
+
+  isString: ( value: unknown ): value is string => {
+    return typeof value === 'string';
+  },
+
   isUpdateAvailable: ( current: string, latest: string ): boolean => {
     return compare ( current, latest ) === -1;
   },
