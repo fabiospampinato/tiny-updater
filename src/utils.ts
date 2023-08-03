@@ -25,7 +25,7 @@ const Utils = {
   },
 
   getLatestVersion: async ( name: string ): Promise<string | undefined> => {
-    const latestUrl = `http://registry.npmjs.org/${name}/latest`;
+    const latestUrl = `https://registry.npmjs.org/${name}/latest`;
     const latest = await Utils.fetch ( latestUrl );
     return latest.version;
   },
