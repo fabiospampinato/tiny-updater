@@ -42,6 +42,10 @@ const Utils = {
     return compare ( current, latest ) === -1;
   },
 
+  noop: (): undefined => {
+    return;
+  },
+
   notify: ( name: string, version: string, latest: string ): void => {
     if ( !globalThis.process?.stdout?.isTTY ) return; // Probably piping stdout
     const log = () => console.log ( `\n\n📦 Update available for ${colors.cyan ( name )}: ${colors.gray ( version )} → ${colors.green ( latest )}` );

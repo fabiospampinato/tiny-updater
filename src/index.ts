@@ -14,7 +14,7 @@ const updater = async ( { name, version, ttl = 0 }: Options ): Promise<boolean> 
   const record = Store.get ( name );
   const timestamp = Date.now ();
   const isFresh = !record || ( timestamp - record.timestampFetch ) >= ttl;
-  const latest = isFresh ? await Utils.getLatestVersion ( name ).catch ( () => undefined ) : record?.version;
+  const latest = isFresh ? await Utils.getLatestVersion ( name ).catch ( Utils.noop ) : record?.version;
 
   if ( !latest ) return false;
 
@@ -26,7 +26,11 @@ const updater = async ( { name, version, ttl = 0 }: Options ): Promise<boolean> 
 
   }
 
-  if ( !Utils.isUpdateAvailable ( version, latest ) ) return false;
+  if ( !Utils.isUpdateAvailable ( version, latest ) ) {
+
+    return false;
+
+  }
 
   if ( isFresh ) {
 
