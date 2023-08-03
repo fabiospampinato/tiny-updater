@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import {SessionStore} from 'isostore';
+import IonStore from 'ionstore';
 import Utils from './utils';
 import type {StoreRecord} from './types';
 
@@ -11,7 +11,7 @@ class Store {
 
   /* VARIABLES */
 
-  private store = new SessionStore ( 'tiny-updater' );
+  private store = new IonStore ( 'tiny-updater' );
 
   /* API */
 
