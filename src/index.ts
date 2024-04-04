@@ -45,3 +45,4 @@ const updater = async ( { name, version, ttl = 0 }: Options ): Promise<boolean> 
 /* EXPORT */
 
 export default updater;
+export type {Options};
