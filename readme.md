@@ -32,7 +32,7 @@ await updater ({ name, version, ttl: 86_400_000 });
 
 // If there is an update available:
 // 1. `true` is returned
-// 2. At most once a day, right before the process exists, a message like the following is logged to the console:
+// 2. At most once a day, right before the process exits, a message like the following is logged to the console:
 // 📦 Update available for example-package: 0.1.0 → 1.0.0
 ```
 
