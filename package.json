@@ -2,6 +2,7 @@
   "name": "tiny-updater",
   "repository": "github:fabiospampinato/tiny-updater",
   "description": "A small update notifier for NPM packages, useful for CLI apps.",
+  "license": "MIT",
   "version": "3.5.2",
   "type": "module",
   "main": "dist/index.js",
@@ -25,13 +26,13 @@
     "updater"
   ],
   "dependencies": {
-    "ionstore": "^1.0.0",
-    "tiny-colors": "^2.0.2",
-    "when-exit": "^2.1.1"
+    "ionstore": "^1.0.1",
+    "tiny-colors": "^2.2.2",
+    "when-exit": "^2.1.4"
   },
   "devDependencies": {
-    "fava": "^0.2.0",
-    "tsex": "^3.0.0",
-    "typescript": "^5.1.6"
+    "fava": "^0.3.4",
+    "tsex": "^4.0.2",
+    "typescript": "^5.7.3"
   }
 }
