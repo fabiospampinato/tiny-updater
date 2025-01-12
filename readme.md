@@ -15,7 +15,7 @@ This is basically a bare-bones alternative to [update-notifier](https://github.c
 ## Install
 
 ```sh
-npm install --save tiny-updater
+npm install tiny-updater
 ```
 
 ## Usage
@@ -23,6 +23,8 @@ npm install --save tiny-updater
 ```ts
 import updater from 'tiny-updater';
 import {name, version} from './package.json';
+
+// Let's check for updates
 
 await updater ({ name, version, ttl: 86_400_000 });
 
