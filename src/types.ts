@@ -1,10 +1,17 @@
 
 /* MAIN */
 
+type AuthInfo = {
+  type: string,
+  token: string
+};
+
 type Options = {
+  authInfo?: AuthInfo | undefined
   name: string,
+  registryUrl?: string | undefined,
   version: string,
-  ttl?: number
+  ttl?: number | undefined
 };
 
 type StoreRecord = {
@@ -13,6 +20,21 @@ type StoreRecord = {
   version: string
 };
 
+type UtilsFetchOptions = {
+  authInfo?: AuthInfo | undefined
+};
+
+type UtilsGetLatestVersionOptions = {
+  authInfo?: AuthInfo | undefined,
+  registryUrl?: string | undefined
+};
+
 /* EXPORT */
 
-export type {Options, StoreRecord};
+export type {
+  AuthInfo,
+  Options,
+  StoreRecord,
+  UtilsFetchOptions,
+  UtilsGetLatestVersionOptions
+};

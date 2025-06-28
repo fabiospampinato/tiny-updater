@@ -9,12 +9,20 @@ import type {Options, StoreRecord} from './types';
 
 //TODO: Account for non-latest releases
 
-const updater = async ( { name, version, ttl = 0 }: Options ): Promise<boolean> => {
+const updater = async ( {
+  authInfo,
+  name,
+  registryUrl,
+  version,
+  ttl = 0
+}: Options ): Promise<boolean> => {
 
   const record = Store.get ( name );
   const timestamp = Date.now ();
   const isFresh = !record || ( timestamp - record.timestampFetch ) >= ttl;
-  const latest = isFresh ? await Utils.getLatestVersion ( name ).catch ( Utils.noop ) : record?.version;
+  const latest = isFresh
+    ? await Utils.getLatestVersion ( name, { authInfo, registryUrl } ).catch ( Utils.noop )
+    : record?.version;
 
   if ( !latest ) return false;
 
