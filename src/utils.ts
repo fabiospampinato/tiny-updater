@@ -1,9 +1,9 @@
 
 /* IMPORT */
 
+import { parse, compare } from './semver';
 import colors from 'tiny-colors';
 import whenExit from 'when-exit';
-import compare from './compare';
 
 /* MAIN */
 
@@ -39,7 +39,7 @@ const Utils = {
   },
 
   isUpdateAvailable: ( current: string, latest: string ): boolean => {
-    return compare ( current, latest ) === -1;
+    return compare ( parse(current), parse(latest) ) === -1;
   },
 
   noop: (): undefined => {
