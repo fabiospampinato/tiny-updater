@@ -4,13 +4,13 @@
 import * as Store from './store';
 import {noop} from './utils';
 import {compare, getLatest, notify} from './version';
-import type {Options, Registry, StoreRecord} from './types';
+import type {Options, Registry, Result, StoreRecord} from './types';
 
 /* MAIN */
 
 //TODO: Support updating to non-latest releases
 
-const updater = async ( { name, version, registry, ttl = 0 }: Options ): Promise<boolean> => {
+const updater = async ( { name, version, print, registry, ttl = 0 }: Options ): Promise<boolean> => {
 
   const record = Store.get ( name );
   const timestamp = Date.now ();
@@ -35,7 +35,9 @@ const updater = async ( { name, version, registry, ttl = 0 }: Options ): Promise
 
   if ( isFresh ) {
 
-    notify ( name, version, latest );
+    const result: Result = { name, current: version, latest };
+
+    notify ( result, print );
 
   }
 
@@ -46,4 +48,4 @@ const updater = async ( { name, version, registry, ttl = 0 }: Options ): Promise
 /* EXPORT */
 
 export default updater;
-export type {Options, Registry};
+export type {Options, Registry, Result};

@@ -4,6 +4,7 @@
 type Options = {
   name: string,
   version: string,
+  print?: ( result: Result ) => void,
   registry?: Registry,
   ttl?: number
 };
@@ -17,6 +18,12 @@ type Registry = {
   url?: string
 };
 
+type Result = {
+  name: string,
+  current: string,
+  latest: string
+};
+
 type StoreRecord = {
   timestamp: number,
   version: string
@@ -24,4 +31,4 @@ type StoreRecord = {
 
 /* EXPORT */
 
-export type {Options, Package, Registry, StoreRecord};
+export type {Options, Package, Registry, Result, StoreRecord};

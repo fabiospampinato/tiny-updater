@@ -4,7 +4,7 @@
 import colors from 'tiny-colors';
 import whenExit from 'when-exit';
 import {isObject, isString} from './utils';
-import type {Package, Registry} from './types';
+import type {Package, Registry, Result} from './types';
 
 /* MAIN */
 
@@ -79,13 +79,13 @@ const getLatest = async ( name: string, registry?: Registry ): Promise<string | 
 
 };
 
-const notify = ( name: string, version: string, latest: string ): void => {
+const notify = ( result: Result, print?: ( result: Result ) => void ): void => {
 
   if ( !globalThis.process?.stdout?.isTTY ) return; // Probably piping stdout
 
-  const log = () => console.log ( `\n\n📦 Update available for ${colors.cyan ( name )}: ${colors.gray ( version )} → ${colors.green ( latest )}` );
+  print ||= () => console.log ( `\n\n📦 Update available for ${colors.cyan ( result.name )}: ${colors.gray ( result.current )} → ${colors.green ( result.latest )}` );
 
-  whenExit ( log );
+  whenExit ( () => print ( result ) );
 
 };
 
