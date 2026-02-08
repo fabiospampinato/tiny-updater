@@ -20,13 +20,41 @@ npm install tiny-updater
 
 ## Usage
 
+The following options are supported:
+
+```ts
+type Options = {
+  // The name of the package to check for updates on the registry
+  name: string,
+  // The current version of the package, used to check if an update is available compared to this version
+  version: string,
+  // A function to print the update message in your own way
+  print?: ({ name, current, latest }) => void,
+  // Some options for customizing how the registry is being queried
+  registry?: {
+    // Map of custom additional headers to set when querying the registry
+    headers?: {},
+    // The URL for the registry to query, it defaults to NPM
+    url?: string
+  },
+  // Time to wait before checking for updates again
+  ttl?: number
+};
+```
+
+This is how you'd use it:
+
 ```ts
 import updater from 'tiny-updater';
 import {name, version} from './package.json';
 
 // Let's check for updates
 
-await updater ({ name, version, ttl: 86_400_000 });
+await updater ({
+  name,
+  version,
+  ttl: 86_400_000
+});
 
 // If there are no updates available:
 // 1. `false` is returned
