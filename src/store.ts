@@ -1,52 +1,45 @@
 
 /* IMPORT */
 
+import once from 'function-once';
 import IonStore from 'ionstore';
-import Utils from './utils';
+import {isNumber, isObject, isString} from './utils';
 import type {StoreRecord} from './types';
 
 /* MAIN */
 
-class Store {
+const store = once ((): IonStore => {
 
-  /* VARIABLES */
+  return new IonStore ( 'tiny-updater' );
 
-  private store = new IonStore ( 'tiny-updater' );
+});
 
-  /* API */
+const get = ( name: string ): StoreRecord | undefined => {
 
-  get = ( name: string ): StoreRecord | undefined => {
+  try {
 
-    try {
+    const recordRaw = store ().get ( name );
 
-      const recordRaw = this.store.get ( name );
+    if ( !recordRaw ) return;
 
-      if ( !recordRaw ) return;
+    const record: StoreRecord = JSON.parse ( recordRaw );
 
-      const record = JSON.parse ( recordRaw );
+    if ( !isObject ( record ) ) return;
+    if ( !isNumber ( record.timestamp ) ) return;
+    if ( !isString ( record.version ) ) return;
 
-      if ( !Utils.isNumber ( record.timestampFetch ) ) return;
-      if ( !Utils.isNumber ( record.timestampNotification ) ) return;
-      if ( !Utils.isString ( record.version ) ) return;
+    return record;
 
-      return record;
+  } catch {}
 
-    } catch {
+};
 
-      return;
+const set = ( name: string, record: StoreRecord ): undefined => {
 
-    }
+  store ().set ( name, JSON.stringify ( record ) );
 
-  }
-
-  set = ( name: string, record: StoreRecord ): void => {
-
-    this.store.set ( name, JSON.stringify ( record ) );
-
-  }
-
-}
+};
 
 /* EXPORT */
 
-export default new Store ();
+export {get, set};

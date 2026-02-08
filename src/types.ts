@@ -7,12 +7,15 @@ type Options = {
   ttl?: number
 };
 
+type Package = {
+  version: string
+};
+
 type StoreRecord = {
-  timestampFetch: number,
-  timestampNotification: number,
+  timestamp: number,
   version: string
 };
 
 /* EXPORT */
 
-export type {Options, StoreRecord};
+export type {Options, Package, StoreRecord};

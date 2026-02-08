@@ -6,7 +6,7 @@ A small update notifier for NPM packages, useful for CLI apps.
 
 This is basically a bare-bones alternative to [update-notifier](https://github.com/yeoman/update-notifier), with all the pros and cons of that.
 
-- **Small**: This library has only a handful of small and reliable dependencies. This library weighs about ~5kb total.
+- **Small**: This library has only a handful of small dependencies I maintain. This library weighs about ~5kb total.
 - **Bundler-ready**: This library can be bundled, which is important for achieving the best startup times. `update-notifier` on the other hand uses highly dyanmic imports and spawns a child process, if you are using it you can't bundle your CLI app.
 - **Fast**: Startup performance is paramount for CLI apps, in order to improve that you need to bundle your app and make the bundle as small as possible, using this library won't compromise your startup times much.
 - **Bare-bones**: Being lightweight comes at a cost, that cost is mainly less visually-sophisticated update messages written to the console compared to `update-notifier`, but still I think the output is pretty good.

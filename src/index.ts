@@ -1,8 +1,9 @@
 
 /* IMPORT */
 
-import Store from './store';
-import Utils from './utils';
+import * as Store from './store';
+import {noop} from './utils';
+import {compare, getLatest, notify} from './version';
 import type {Options, StoreRecord} from './types';
 
 /* MAIN */
@@ -13,20 +14,20 @@ const updater = async ( { name, version, ttl = 0 }: Options ): Promise<boolean> 
 
   const record = Store.get ( name );
   const timestamp = Date.now ();
-  const isFresh = !record || ( timestamp - record.timestampFetch ) >= ttl;
-  const latest = isFresh ? await Utils.getLatestVersion ( name ).catch ( Utils.noop ) : record?.version;
+  const isFresh = !record || ( timestamp - record.timestamp ) >= ttl;
+  const latest = isFresh ? await getLatest ( name ).catch ( noop ) : record?.version;
 
   if ( !latest ) return false;
 
   if ( isFresh ) {
 
-    const record: StoreRecord = { timestampFetch: timestamp, timestampNotification: timestamp, version: latest };
+    const record: StoreRecord = { timestamp, version: latest };
 
     Store.set ( name, record );
 
   }
 
-  if ( !Utils.isUpdateAvailable ( version, latest ) ) {
+  if ( compare ( version, latest ) >= 0 ) { // Current version is not older
 
     return false;
 
@@ -34,7 +35,7 @@ const updater = async ( { name, version, ttl = 0 }: Options ): Promise<boolean> 
 
   if ( isFresh ) {
 
-    Utils.notify ( name, version, latest );
+    notify ( name, version, latest );
 
   }
 

@@ -1,59 +1,30 @@
 
-/* IMPORT */
-
-import colors from 'tiny-colors';
-import whenExit from 'when-exit';
-import compare from './compare';
-
 /* MAIN */
 
-const Utils = {
+const isNumber = ( value: unknown ): value is number => {
 
-  /* API */
+  return typeof value === 'number';
 
-  fetch: async ( url: string ): Promise<{ version?: string }> => {
-    const signal = Utils.getExitSignal ();
-    const request = await fetch ( url, { signal } );
-    const json = await request.json ();
-    return json;
-  },
+};
 
-  getExitSignal: () => {
-    const aborter = new AbortController ();
-    whenExit ( () => aborter.abort () );
-    return aborter.signal;
-  },
+const isObject = ( value: unknown ): value is Record<string, unknown> => {
 
-  getLatestVersion: async ( name: string ): Promise<string | undefined> => {
-    const latestUrl = `https://registry.npmjs.org/${name}/latest`;
-    const latest = await Utils.fetch ( latestUrl );
-    return latest.version;
-  },
+  return typeof value === 'object' && value !== null;
 
-  isNumber: ( value: unknown ): value is number => {
-    return typeof value === 'number';
-  },
+};
 
-  isString: ( value: unknown ): value is string => {
-    return typeof value === 'string';
-  },
+const isString = ( value: unknown ): value is string => {
 
-  isUpdateAvailable: ( current: string, latest: string ): boolean => {
-    return compare ( current, latest ) === -1;
-  },
+  return typeof value === 'string';
 
-  noop: (): undefined => {
-    return;
-  },
+};
 
-  notify: ( name: string, version: string, latest: string ): void => {
-    if ( !globalThis.process?.stdout?.isTTY ) return; // Probably piping stdout
-    const log = () => console.log ( `\n\n📦 Update available for ${colors.cyan ( name )}: ${colors.gray ( version )} → ${colors.green ( latest )}` );
-    whenExit ( log );
-  }
+const noop = (): undefined => {
+
+  return;
 
 };
 
 /* EXPORT */
 
-export default Utils;
+export {isNumber, isObject, isString, noop};

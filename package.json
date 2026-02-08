@@ -26,13 +26,14 @@
     "updater"
   ],
   "dependencies": {
+    "function-once": "^3.0.1",
     "ionstore": "^1.0.1",
     "tiny-colors": "^2.2.2",
-    "when-exit": "^2.1.4"
+    "when-exit": "^2.1.5"
   },
   "devDependencies": {
-    "fava": "^0.3.4",
+    "fava": "^0.3.5",
     "tsex": "^4.0.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.9.3"
   }
 }
