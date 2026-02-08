@@ -3,7 +3,7 @@
   "repository": "github:fabiospampinato/tiny-updater",
   "description": "A small update notifier for NPM packages, useful for CLI apps.",
   "license": "MIT",
-  "version": "3.5.3",
+  "version": "3.6.0",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
