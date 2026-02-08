@@ -4,7 +4,7 @@
 import colors from 'tiny-colors';
 import whenExit from 'when-exit';
 import {isObject, isString} from './utils';
-import type {Package} from './types';
+import type {Package, Registry} from './types';
 
 /* MAIN */
 
@@ -54,11 +54,22 @@ const compare = ( versionA: string, versionB: string ): -1 | 0 | 1 => {
 
 };
 
-const getLatest = async ( name: string ): Promise<string | undefined> => {
+const getLatest = async ( name: string, registry?: Registry ): Promise<string | undefined> => {
 
-  const url = `https://registry.npmjs.org/${name}/latest`;
-  const headers = new Headers ({ 'Accept': 'application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*' });
-  const response = await fetch ( url, { headers } );
+  const registryUrl = registry?.url?.replace ( /\/$/, '' ) || 'https://registry.npmjs.org';
+  const packageUrl = `${registryUrl}/${name}/latest`;
+
+  const headers = new Headers ({
+    'Accept': 'application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*'
+  });
+
+  if ( registry?.headers ) {
+    for ( const key in registry.headers ) {
+      headers.set ( key, registry.headers[key] );
+    }
+  }
+
+  const response = await fetch ( packageUrl, { headers } );
   const json: Package = await response.json ();
 
   if ( !isObject ( json ) ) return;
