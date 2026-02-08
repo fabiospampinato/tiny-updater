@@ -8,22 +8,47 @@ import type {Package} from './types';
 
 /* MAIN */
 
-const compare = ( a: string, b: string ): -1 | 0 | 1 => { // This is just a slightly modified version of semver-compare, MIT licensed
+const compare = ( versionA: string, versionB: string ): -1 | 0 | 1 => {
 
-  const pa = a.split ( '.' );
-  const pb = b.split ( '.' );
+  /* BASIC PARSING */
+
+  const [baseA, suffixA = ''] = versionA.split ( '+' )[0].split ( '-' );
+  const [baseB, suffixB = ''] = versionB.split ( '+' )[0].split ( '-' );
+
+  /* BASE COMPARISON */
+
+  const basePartsA = baseA.split ( '.' );
+  const basePartsB = baseB.split ( '.' );
 
   for ( let i = 0; i < 3; i++ ) {
 
-    let na = Number ( pa[i] );
-    let nb = Number ( pb[i] );
+    let a = Number ( basePartsA[i] ) || 0;
+    let b = Number ( basePartsB[i] ) || 0;
 
-    if ( na > nb ) return 1;
-    if ( nb > na ) return -1;
-    if ( !isNaN ( na ) && isNaN ( nb ) ) return 1;
-    if ( isNaN ( na ) && !isNaN ( nb ) ) return -1;
+    if ( a > b ) return 1;
+    if ( b > a ) return -1;
 
   }
+
+  /* SUFFIX COMPARISON */
+
+  if ( suffixA && !suffixB ) return -1;
+  if ( suffixB && !suffixA ) return 1;
+
+  const suffixPartsA = suffixA.split ( '.' );
+  const suffixPartsB = suffixB.split ( '.' );
+
+  for ( let i = 0, l = Math.max ( suffixPartsA.length, suffixPartsB.length ); i < l; i++ ) {
+
+    const a = Number ( suffixPartsA[i] ) || suffixPartsA[i] || '';
+    const b = Number ( suffixPartsB[i] ) || suffixPartsB[i] || '';
+
+    if ( a > b ) return 1;
+    if ( b > a ) return -1;
+
+  }
+
+  /* FALLBACK */
 
   return 0;
 

@@ -8,7 +8,7 @@ import type {Options, Record} from './types';
 
 /* MAIN */
 
-//TODO: Account for non-latest releases
+//TODO: Support updating to non-latest releases
 
 const updater = async ( { name, version, ttl = 0 }: Options ): Promise<boolean> => {
 
