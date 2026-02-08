@@ -57,7 +57,8 @@ const compare = ( versionA: string, versionB: string ): -1 | 0 | 1 => {
 const getLatest = async ( name: string ): Promise<string | undefined> => {
 
   const url = `https://registry.npmjs.org/${name}/latest`;
-  const response = await fetch ( url );
+  const headers = new Headers ({ 'Accept': 'application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*' });
+  const response = await fetch ( url, { headers } );
   const json: Package = await response.json ();
 
   if ( !isObject ( json ) ) return;
