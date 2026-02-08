@@ -4,7 +4,7 @@
 import * as Store from './store';
 import {noop} from './utils';
 import {compare, getLatest, notify} from './version';
-import type {Options, StoreRecord} from './types';
+import type {Options, Record} from './types';
 
 /* MAIN */
 
@@ -21,7 +21,7 @@ const updater = async ( { name, version, ttl = 0 }: Options ): Promise<boolean> 
 
   if ( isFresh ) {
 
-    const record: StoreRecord = { timestamp, version: latest };
+    const record: Record = { timestamp, version: latest };
 
     Store.set ( name, record );
 

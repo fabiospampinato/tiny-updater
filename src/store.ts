@@ -4,7 +4,7 @@
 import once from 'function-once';
 import IonStore from 'ionstore';
 import {isNumber, isObject, isString} from './utils';
-import type {StoreRecord} from './types';
+import type {Record} from './types';
 
 /* MAIN */
 
@@ -14,7 +14,7 @@ const store = once ((): IonStore => {
 
 });
 
-const get = ( name: string ): StoreRecord | undefined => {
+const get = ( name: string ): Record | undefined => {
 
   try {
 
@@ -22,7 +22,7 @@ const get = ( name: string ): StoreRecord | undefined => {
 
     if ( !recordRaw ) return;
 
-    const record: StoreRecord = JSON.parse ( recordRaw );
+    const record: Record = JSON.parse ( recordRaw );
 
     if ( !isObject ( record ) ) return;
     if ( !isNumber ( record.timestamp ) ) return;
@@ -34,7 +34,7 @@ const get = ( name: string ): StoreRecord | undefined => {
 
 };
 
-const set = ( name: string, record: StoreRecord ): undefined => {
+const set = ( name: string, record: Record ): undefined => {
 
   store ().set ( name, JSON.stringify ( record ) );
 

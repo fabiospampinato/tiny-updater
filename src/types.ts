@@ -11,11 +11,11 @@ type Package = {
   version: string
 };
 
-type StoreRecord = {
+type Record = {
   timestamp: number,
   version: string
 };
 
 /* EXPORT */
 
-export type {Options, Package, StoreRecord};
+export type {Options, Package, Record};
